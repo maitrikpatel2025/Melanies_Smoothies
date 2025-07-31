@@ -14,18 +14,8 @@ st.write('The name on your Smoothie will be:', name_on_order)
 
 import streamlit as st
 
-cnx = st.connection("snowflake", type="snowflake",
-    user="maitrikpatel2025",
-    password="Maitrik@30112025",
-    account="ltxrmav-zzb65037",  # no .snowflakecomputing.com
-    warehouse="COMPUTE_WH",
-    database="SMOOTHIES",
-    schema="PUBLIC",
-    role="SYSADMIN"
-)
-
+cnx = st.connection("my_example_connection", type="snowflake")
 session = cnx.session()
-
 
 # Query fruit options
 my_dataframe = session.table("smoothies.public.fruit_options").select(col('FRUIT_NAME'))
