@@ -15,13 +15,13 @@ st.write('The name on your Smoothie will be:', name_on_order)
 import streamlit as st
 
 cnx = st.connection("snowflake", type="snowflake",
-    user="MAITRIKPATEL2025",
+    user="maitrikpatel2025",
     password="Maitrik@30112025",
     account="ltxrmav-zzb65037",  # no .snowflakecomputing.com
     warehouse="COMPUTE_WH",
     database="SMOOTHIES",
     schema="PUBLIC",
-    role="PUBLIC"
+    role="SYSADMIN"
 )
 
 session = cnx.session()
