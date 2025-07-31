@@ -41,8 +41,16 @@ if ingredients_list:
 
     my_insert_stmt = f"""
         INSERT INTO smoothies.public.orders (ingredients, name_on_order)
-        VALUES ('{ingredients_string}', '{name_on_order}')
-    """
+        VALUES ('{ingredients_string}', '{name_on_order}')"""
+
+    if ingredients_list:
+        ingredients_string = ''
+        st.subheader(fruit_chosen + 'Nutrition Information' )
+        for fruit_chosen in ingredients_list:
+            ingredients_string += fruit_chosen + ' '
+            smoothiefroot_response = requests.get("https://fruityvice.com/api/fruit"+ fruit_chosen)
+            sf_df = st.dataframe(data=smoothiefroot_response.json(), use_container_width=True)
+            
 
     if st.button('Submit Order'):
         session.sql(my_insert_stmt).collect()
