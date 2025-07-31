@@ -16,7 +16,10 @@ cnx = st.connection("my_example_connection", type="snowflake")
 session = cnx.session()
 
 # Query fruit options
-my_dataframe = session.table("smoothies.public.fruit_options").select(col('FRUIT_NAME'))
+my_dataframe = session.table("smoothies.public.fruit_options").select(col('FRUIT_NAME'),col('SEARCH_ON'))
+
+df_df = my_dataframe.to_pandas()
+
 fruit_list = [row["FRUIT_NAME"] for row in my_dataframe.collect()]
 
 # Select ingredients
@@ -33,6 +36,10 @@ if ingredients_list:
 
     # Show nutrition info per fruit
     for fruit_chosen in ingredients_list:
+
+        search_on=pd_df.loc[pd_df['FRUIT_NAME'] == fruit_chosen, 'SEARCH_ON'].iloc[0]
+        #st.write('The search value for ', fruit_chosen,' is ', search_on, '.')
+        
         st.subheader(f'{fruit_chosen} Nutrition Information')
         try:
             response = requests.get(f"https://fruityvice.com/api/fruit/{fruit_chosen.lower()}")
