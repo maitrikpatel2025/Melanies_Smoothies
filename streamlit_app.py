@@ -12,15 +12,19 @@ st.write('The name on your Smoothie will be:', name_on_order)
 
 # Establish connection to Snowflake
 
-try:
-    cnx = st.connection("snowflake", type="snowflake")
-    session = cnx.session()
-    st.success("✅ Successfully connected to Snowflake!")
-    df = session.sql("SELECT CURRENT_USER(), CURRENT_ROLE()").collect()
-    st.dataframe(df)
-except Exception as e:
-    st.error("❌ Snowflake connection failed.")
-    st.exception(e)
+import streamlit as st
+
+cnx = st.connection("snowflake", type="snowflake",
+    user="MAITRIKPATEL2025",
+    password="Maitrik@30112025",
+    account="ltxrmav-zzb65037",  # no .snowflakecomputing.com
+    warehouse="COMPUTE_WH",
+    database="SMOOTHIES",
+    schema="PUBLIC",
+    role="PUBLIC"
+)
+
+session = cnx.session()
 
 
 # Query fruit options
