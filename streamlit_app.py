@@ -11,8 +11,17 @@ name_on_order = st.text_input('Name on Smoothie:')
 st.write('The name on your Smoothie will be:', name_on_order)
 
 # Establish connection to Snowflake
-cnx = st.connection("snowflake", type="snowflake")
-session = cnx.session()
+
+try:
+    cnx = st.connection("snowflake", type="snowflake")
+    session = cnx.session()
+    st.success("✅ Successfully connected to Snowflake!")
+    df = session.sql("SELECT CURRENT_USER(), CURRENT_ROLE()").collect()
+    st.dataframe(df)
+except Exception as e:
+    st.error("❌ Snowflake connection failed.")
+    st.exception(e)
+
 
 # Query fruit options
 my_dataframe = session.table("smoothies.public.fruit_options").select(col('FRUIT_NAME'))
